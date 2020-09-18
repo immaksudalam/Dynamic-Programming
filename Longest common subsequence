@@ -6,6 +6,7 @@ using namespace std;
 
 int LCS(int i, int j)
 {
+     if(i==0 || j==0) return 0;
     if(lcs[i][j]!=-1){
         return lcs[i][j];
     }
