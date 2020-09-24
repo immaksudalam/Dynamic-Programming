@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define size 1040
+static char x[size], y[size];
+int editdistance(int n, int m)
+{
+    if(n==0)
+        return m;
+    if(m==0)
+        return n;
+    if(x[n-1]==y[m-1])
+        return editdistance(n-1, m-1);
+    else return 1+min(min(editdistance(n-1, m), editdistance(n, m-1)), editdistance(n-1,m-1));
+}
+int main()
+{
+    gets(x);
+    gets(y);
+    int n = strlen(x);
+    int m = strlen(y);
+    cout<<editdistance(n, m);
+}
