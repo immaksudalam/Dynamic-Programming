@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+int knapsack(int val[], int wt[], int n, int w)
+{
+    int dp[2][w+1];
+    memset(dp,0, sizeof(dp));
+    for(int i=0; i<n; i++){
+        int j=0;
+        if(i%2!=0){
+            while(++j<=w){
+                if(wt[i] <=j) dp[1][j] = max((val[i]+ dp[0][j-wt[i]]), dp[0][j]);
+                else dp[1][j] = dp[0][j];
+            }
+        }
+        else{
+            while(++j<= w){
+                if(wt[i] <= j)
+                    dp[0][j] = max((val[i]+ dp[1][j-wt[i]]), dp[1][j]);
+                 else dp[0][j] = dp[1][j];
+            }
+        }
+    }
+    if(n%2==0)return dp[1][w];
+    else return dp[0][w];
+}
+int main()
+{
+    int w, n;
+    cin>>w>>n;
+    int val[n], wt[n];
+    for(int i=0; i<n; i++)
+        cin>>val[i]>>wt[i];
+    cout<<knapsack(val, wt, n, w)<<endl;
+}
