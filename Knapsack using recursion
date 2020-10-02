@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+int knapsack(int val[], int n, int k)
+{
+    if(n==0 || k==0)
+        return 0;
+    if(val[n-1]<=k)
+        return max((val[n-1]+knapsack(val, n-1, k-val[n-1])), knapsack(val, n-1, k));
+    else return knapsack(val, n-1, k);
+}
+int main()
+{
+   int t;
+   cin>>t;
+   int a;
+   while(t--){
+      int n,k;
+      cin>>n>>k;
+      vector<int> v;
+      for(int i=0; i<n; i++){
+        int m;
+        cin>>m;
+        int sum=0;
+        for(int j=0; j<m; j++){
+            cin>>a;
+            sum+=a;
+        }
+        v.push_back(sum);
+      }
+      int arr[n];
+      for(int i=0; i<n; i++){
+        arr[i] = v[i];
+      }
+      cout<<knapsack(arr, n, k)<<endl;
+   }
+}
+
