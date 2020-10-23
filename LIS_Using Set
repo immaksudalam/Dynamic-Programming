@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int sz = 1000;
+int input[sz+5], n;
+void solve()
+{
+    set<int>lis;
+    cin>>n;
+    for(int i=0; i<n; i++){
+        cin>>input[i];
+        lis.insert(input[i]);
+        auto it = lis.find(input[i]);
+        it++;
+        if(it!=lis.end()) lis.erase(it);
+    }
+    cout<<lis.size();
+}
+int main()
+{
+    solve();
+}
+
