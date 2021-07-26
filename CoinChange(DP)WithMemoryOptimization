@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define max_w 1000
+#define max_n 20
+#define INF 99999
+int N, W;
+int Coin[max_n];
+int memo[max_w];
+
+int CoinChange(int W){
+    if(W==0)return 0;
+    if(W<0) return INF;
+    if(memo[W]!=-1) return memo[W];
+
+    int ans = INF;
+    for(int i=0; i<N; i++){
+        ans = min(ans, 1+ CoinChange(W-Coin[i]));
+    }
+    return memo[W]=ans;
+
+}
+int main()
+{
+    cin>>W>>N;
+    for(int i=0; i<N; i++) cin>>Coin[i];
+    memset(memo, -1, sizeof(memo));
+    int ans = CoinChange(W);
+    if(ans == INF)cout<<"Solution Not possible"<<endl;
+    else cout<<ans<<endl;
+}
