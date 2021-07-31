@@ -1,0 +1,42 @@
+/*Collecting Beepers*/
+
+#include <bits/stdc++.h>
+using namespace std;
+int  TC, xsize, ysize, n, x[11], y[11], dist[11][11], memo[11][1<<11];
+
+int tsp(int pos, int bitmask){ //bitmask stores the visited coordinates.
+    if(bitmask==(1<<(n+1))-1)
+        return dist[pos][0]; // return trip to close the loop.
+    if(memo[pos][bitmask] != -1)
+        return memo[pos][bitmask];
+
+    int ans = 2000000000;
+    for(int i=0; i<=n; i++){//traverse over all friends
+        if(i !=pos && !(bitmask & (1<<i))){ //if coordinate i is not visited
+            ans = min(ans , dist[pos][i]+tsp(i, bitmask|(1<<i))); //bitmask|(1<<i) on i'th bit.
+        }
+
+    }
+    return memo[pos][bitmask]=ans;
+}
+int main()
+{
+    cin>>TC;
+    while(TC--){
+        cin>>xsize>>ysize; // these values are not used
+        cin>>x[0]>>y[0];
+        cin>>n;
+
+        for(int i=1; i<=n; i++) cin>> x[i]>>y[i];//karel's possition is at index 0
+
+        for(int i=0; i<=n; i++){ // building distance table
+            for(int j=0; j<=n; j++){
+                dist[i][j]=abs(x[i]-x[j])+abs(y[i]-y[j]); //manhattan distance
+            }
+        }
+        memset(memo, -1, sizeof(memo));
+        cout<<"The shortest path has length "<<tsp(0, 1)<<endl;
+
+
+    }
+}
